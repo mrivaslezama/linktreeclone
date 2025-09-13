@@ -77,13 +77,20 @@ test:
 #
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
-#
+# config/database.yml
+# ... other environments ...
+
 production:
-  url: postgresql://linktreeclone_user:Iv4bdadTM9IU6B2SAsW9lqThZmUgGYAy@dpg-d32e73emcj7s739gt5g0-a/linktreeclone
+  url: <%= ENV['DATABASE_URL'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 cable:
   primary:
-    url: postgresql://linktreeclone_user:Iv4bdadTM9IU6B2SAsW9lqThZmUgGYAy@dpg-d32e73emcj7s739gt5g0-a/linktreeclone
+    url: <%= ENV.fetch('DATABASE_URL') %>
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+queue:
+  primary:
+    url: <%= ENV.fetch('DATABASE_URL') %>
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
