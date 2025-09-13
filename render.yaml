@@ -1,0 +1,25 @@
+databases:
+  - name: linktreeclone-db
+    databaseName: linktreeclone_production
+    user: linktreeclone
+    plan: free
+
+services:
+  - type: web
+    name: linktreeclone
+    runtime: ruby
+    plan: free
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec rails server'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: linktreeclone-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        value: 7ef0e2b47e3ca0733adbcbd581936da9
+      - key: RAILS_ENV
+        value: production
+      - key: BUNDLE_WITHOUT
+        value: development:test
+
