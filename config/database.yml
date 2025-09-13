@@ -79,11 +79,11 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: postgresql://linktreeclone_user:Iv4bdadTM9IU6B2SAsW9lqThZmUgGYAy@dpg-d32e73emcj7s739gt5g0-a/linktreeclone
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 cable:
   primary:
-    url: <%= ENV.fetch('DATABASE_URL') %>
+    url: postgresql://linktreeclone_user:Iv4bdadTM9IU6B2SAsW9lqThZmUgGYAy@dpg-d32e73emcj7s739gt5g0-a/linktreeclone
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
