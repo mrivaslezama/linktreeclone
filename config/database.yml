@@ -21,3 +21,5 @@ cache:
   primary:
     url: <%= ENV.fetch('DATABASE_URL') %>
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+#export DATABASE_URL="postgresql://miguel:olida@localhost:5432/linktreeclonedb"
