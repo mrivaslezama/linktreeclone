@@ -1,10 +1,194 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@profile.name} - Profile Details - Be Known Spa" %>
 
-<%= render @profile %>
+<div class="min-h-screen bg-gray-900">
+  <!-- Navigation -->
+  <nav class="bg-gray-900 border-b border-gray-700">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <%= link_to root_path, class: "flex items-center space-x-3" do %>
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center border border-gray-600">
+              <span class="text-white font-bold text-xs leading-none">Be<span class="text-pink-500">|</span>Known</span>
+            </div>
+            <span class="text-xl font-bold text-white">Be Known Spa</span>
+          <% end %>
+        </div>
 
-<div>
-  <%= link_to "Edit this profile", edit_profile_path(@profile) %> |
-  <%= link_to "Back to profiles", profiles_path %>
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-4">
+          <%= link_to profiles_path, class: "text-gray-300 hover:text-pink-500 px-3 py-2 text-sm font-medium transition-colors" do %>
+            ← Back to Profiles
+          <% end %>
+          <%= link_to edit_profile_path(@profile), class: "bg-pink-500 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-pink-600 transition-colors" do %>
+            Edit Profile
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <%= button_to "Destroy this profile", @profile, method: :delete %>
+  <!-- Success Notice -->
+  <% if notice %>
+    <div class="bg-green-500/10 border border-green-500/20 text-green-400 px-6 py-4 mx-6 lg:mx-12 mt-6 rounded-lg">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 lg:px-12 py-12">
+    <div class="max-w-4xl mx-auto">
+      <!-- Profile Header -->
+      <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 mb-8">
+        <div class="bg-gradient-to-br from-pink-500 to-purple-600 h-48 flex items-center justify-center relative">
+          <div class="text-center text-white">
+            <div class="w-24 h-24 bg-black rounded-full flex items-center justify-center mb-4 mx-auto border-4 border-white/20">
+              <span class="text-white font-bold text-sm leading-none">Be<span class="text-pink-300">|</span>Known</span>
+            </div>
+            <h1 class="text-3xl font-bold"><%= @profile.name %></h1>
+            <p class="text-pink-100 mt-2">Client Profile</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Details -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Information -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Contact Information -->
+          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              Contact Information
+            </h2>
+            
+            <!-- Email -->
+            <div class="mb-6">
+              <div class="flex items-center text-gray-400 text-sm mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                Email Address
+              </div>
+              <p class="text-white text-lg font-medium"><%= @profile.email %></p>
+            </div>
+          </div>
+
+          <!-- Project Details -->
+          <% if @profile.other.present? %>
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Project Details
+              </h2>
+              <div class="bg-gray-700/50 rounded-lg p-4">
+                <p class="text-gray-300 leading-relaxed"><%= simple_format(@profile.other) %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-8">
+          <!-- Links & Social Media -->
+          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+              </svg>
+              Links & Social Media
+            </h2>
+            
+            <div class="space-y-4">
+              <% if @profile.youtube.present? %>
+                <%= link_to @profile.youtube, target: "_blank", rel: "noopener noreferrer", class: "flex items-center p-3 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-colors group" do %>
+                  <svg class="w-5 h-5 text-red-400 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  <div class="flex-1">
+                    <div class="text-red-400 font-medium group-hover:text-red-300">Website/YouTube</div>
+                    <div class="text-gray-400 text-sm truncate"><%= @profile.youtube %></div>
+                  </div>
+                  <svg class="w-4 h-4 text-gray-400 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                <% end %>
+              <% end %>
+              
+              <% if @profile.twitch.present? %>
+                <%= link_to @profile.twitch, target: "_blank", rel: "noopener noreferrer", class: "flex items-center p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg hover:bg-purple-500/20 transition-colors group" do %>
+                  <svg class="w-5 h-5 text-purple-400 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.64 5.93H13.07V10.21H11.64M15.57 5.93H17V10.21H15.57M7 2L3.43 5.57V18.43H7.71V22L11.29 18.43H14.14L20.57 12V2M19.14 11.29L16.29 14.14H13.43L11 16.57V14.14H7.71V3.43H19.14Z"/>
+                  </svg>
+                  <div class="flex-1">
+                    <div class="text-purple-400 font-medium group-hover:text-purple-300">Social Media</div>
+                    <div class="text-gray-400 text-sm truncate"><%= @profile.twitch %></div>
+                  </div>
+                  <svg class="w-4 h-4 text-gray-400 group-hover:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                <% end %>
+              <% end %>
+              
+              <% unless @profile.youtube.present? || @profile.twitch.present? %>
+                <div class="text-center py-8 text-gray-400">
+                  <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                  </svg>
+                  <p class="text-sm">No links provided</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+              </svg>
+              Actions
+            </h2>
+            
+            <div class="space-y-3">
+              <%= link_to edit_profile_path(@profile), class: "w-full flex items-center justify-center bg-pink-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-pink-600 transition-colors" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                Edit Profile
+              <% end %>
+              
+              <%= link_to profiles_path, class: "w-full flex items-center justify-center bg-gray-700 text-gray-300 py-3 px-4 rounded-lg font-medium hover:bg-gray-600 transition-colors" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+                </svg>
+                Back to Profiles
+              <% end %>
+              
+              <%= button_to @profile, method: :delete, data: { confirm: "Are you sure you want to delete this profile? This action cannot be undone." }, class: "w-full flex items-center justify-center bg-red-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-red-700 transition-colors" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Delete Profile
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Custom Styles -->
+<style>
+  .text-gradient {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>

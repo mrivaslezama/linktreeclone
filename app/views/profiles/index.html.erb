@@ -1,39 +1,164 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Client Profiles - Be Known Spa" %>
 
-<% content_for :title, "Profiles" %>
+<div class="min-h-screen bg-gray-900">
+  <!-- Navigation -->
+  <nav class="bg-gray-900 border-b border-gray-700">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <%= link_to root_path, class: "flex items-center space-x-3" do %>
+            <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center border border-gray-600">
+              <span class="text-white font-bold text-xs leading-none">Be<span class="text-pink-500">|</span>Known</span>
+            </div>
+            <span class="text-xl font-bold text-white">Be Known Spa</span>
+          <% end %>
+        </div>
 
-<h1>Profiles</h1>
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-4">
+          <%= link_to root_path, class: "text-gray-300 hover:text-pink-500 px-3 py-2 text-sm font-medium transition-colors" do %>
+            ← Back to Home
+          <% end %>
+          <%= link_to new_profile_path, class: "bg-pink-500 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-pink-600 transition-colors" do %>
+            + New Profile
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-<div id="profiles">
-  <% @profiles.each do |profile| %>
-    <%= render profile %>
-    <p>
-      <%= link_to "Show this profile", profile %>
-    </p>
+  <!-- Success Notice -->
+  <% if notice %>
+    <div class="bg-green-500/10 border border-green-500/20 text-green-400 px-6 py-4 mx-6 lg:mx-12 mt-6 rounded-lg">
+      <%= notice %>
+    </div>
   <% end %>
-</div>
 
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 lg:px-12 py-12">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+        Client <span class="text-gradient">Profiles</span>
+      </h1>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Manage your client profiles and project information
+      </p>
+    </div>
 
-<div class="bg-gray-900 text-white min-h-screen p-8">
-  <div class="mt-8">
-    <%= link_to "New profile", new_profile_path, class: "inline-block rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500" %>
+    <!-- Profiles Grid -->
+    <% if @profiles.any? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% @profiles.each do |profile| %>
+          <div class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-colors duration-300 border border-gray-700 hover:border-pink-500/50">
+            <!-- Profile Header -->
+            <div class="bg-gradient-to-br from-pink-500 to-purple-600 h-32 flex items-center justify-center relative">
+              <div class="text-center text-white">
+                <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mb-2 mx-auto border border-white/20">
+                  <span class="text-white font-bold text-xs leading-none">Be<span class="text-pink-300">|</span>Known</span>
+                </div>
+                <h3 class="text-lg font-semibold"><%= profile.name %></h3>
+              </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="p-6">
+              <!-- Email -->
+              <div class="mb-4">
+                <div class="flex items-center text-gray-400 text-sm mb-1">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                  Email
+                </div>
+                <p class="text-white font-medium"><%= profile.email %></p>
+              </div>
+
+              <!-- Links Section -->
+              <div class="flex flex-wrap gap-2 mb-4">
+                <% if profile.youtube.present? %>
+                  <%= link_to profile.youtube, target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center px-3 py-1 bg-red-500/20 text-red-400 text-xs rounded-full hover:bg-red-500/30 transition-colors" do %>
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Website/YouTube
+                  <% end %>
+                <% end %>
+                <% if profile.twitch.present? %>
+                  <%= link_to profile.twitch, target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center px-3 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full hover:bg-purple-500/30 transition-colors" do %>
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M11.64 5.93H13.07V10.21H11.64M15.57 5.93H17V10.21H15.57M7 2L3.43 5.57V18.43H7.71V22L11.29 18.43H14.14L20.57 12V2M19.14 11.29L16.29 14.14H13.43L11 16.57V14.14H7.71V3.43H19.14Z"/>
+                    </svg>
+                    Social Media
+                  <% end %>
+                <% end %>
+                <% if profile.other.present? %>
+                  <span class="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Has Details
+                  </span>
+                <% end %>
+              </div>
+
+              <!-- Project Details -->
+              <% if profile.other.present? %>
+                <div class="mb-4">
+                  <div class="text-gray-400 text-sm mb-2">Project Details:</div>
+                  <p class="text-gray-300 text-sm line-clamp-3"><%= truncate(profile.other, length: 100) %></p>
+                </div>
+              <% end %>
+
+              <!-- Actions -->
+              <div class="flex gap-2 pt-4 border-t border-gray-700">
+                <%= link_to profile, class: "flex-1 text-center bg-gray-700 text-gray-300 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-600 transition-colors" do %>
+                  View Details
+                <% end %>
+                <%= link_to edit_profile_path(profile), class: "flex-1 text-center bg-pink-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-pink-600 transition-colors" do %>
+                  Edit
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Empty State -->
+      <div class="text-center py-16">
+        <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mb-6 mx-auto">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">No Profiles Yet</h3>
+        <p class="text-gray-400 mb-6">Create your first client profile to get started</p>
+        <%= link_to new_profile_path, class: "inline-flex items-center px-6 py-3 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition-colors" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Create First Profile
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 
-
-<%= link_to "New profile", new_profile_path %>
-
-
-<div class="bg-gray-900 text-white min-h-screen p-8">
-  
-
-  <div class="mt-8">
-    <a href="#" class="inline-block rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500">New profile</a>
-  </div>
-</div>
-
-<div class = “bg-gray-300 text-center font-bold italic underline">
-  This sentence has good design, has background color and center-aligned
-</div>
+<!-- Custom Styles -->
+<style>
+  .text-gradient {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
 
 
