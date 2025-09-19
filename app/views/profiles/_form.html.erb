@@ -1,42 +1,154 @@
-<%= form_with(model: profile) do |form| %>
-  <% if profile.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
-      <ul>
-        <% profile.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          spacing: {
+            '144.5': '36.125rem',
+            '288.75': '72.1875rem'
+          },
+          animation: {
+            'spin-slow': 'spin 3s linear infinite',
+          },
+          backgroundImage: {
+            'linear-to-tr': 'linear-gradient(to top right, var(--tw-gradient-stops))',
+          },
+          clipPath: {
+            'custom-polygon': 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom CSS for the modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: #1a202c;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #4f46e5;
+      color: white;
+      border-radius: 0.375rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <div class="isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
+    <!-- Background blur div from the original HTML -->
+    <div aria-hidden="true" class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+      <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="relative left-1/2 -z-10 aspect-1155/678 w-144.5 max-w-none -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-40rem)] sm:w-288.75"></div>
     </div>
-  <% end %>
+    
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Profile Setup</h2>
+      <p class="mt-2 text-lg/8 text-gray-400">Please fill out your profile information below.</p>
+    </div>
+    
+    <!-- The form structure from the original HTML, with updated fields -->
+    <form id="profile-form" action="#" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+      <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+        <!-- Name field -->
+        <div class="sm:col-span-2">
+          <label for="name" class="block text-sm/6 font-semibold text-white">Name</label>
+          <div class="mt-2.5">
+            <input id="name" type="text" name="name" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+          </div>
+        </div>
+        
+        <!-- YouTube field -->
+        <div class="sm:col-span-2">
+          <label for="youtube" class="block text-sm/6 font-semibold text-white">Facebook URL</label>
+          <div class="mt-2.5">
+            <input id="youtube" type="url" name="youtube" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+          </div>
+        </div>
+        
+        <!-- Twitch field -->
+        <div class="sm:col-span-2">
+          <label for="twitch" class="block text-sm/6 font-semibold text-white">Instagram URL</label>
+          <div class="mt-2.5">
+            <input id="twitch" type="url" name="twitch" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+          </div>
+        </div>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+        <!-- Email field -->
+        <div class="sm:col-span-2">
+          <label for="email" class="block text-sm/6 font-semibold text-white">Email</label>
+          <div class="mt-2.5">
+            <input id="email" type="email" name="email" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500" />
+          </div>
+        </div>
+        
+        <!-- Other field -->
+        <div class="sm:col-span-2">
+          <label for="other" class="block text-sm/6 font-semibold text-white">Comments</label>
+          <div class="mt-2.5">
+            <textarea id="other" name="other" rows="4" class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"></textarea>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Submit button -->
+      <div class="mt-10">
+        <button type="submit" class="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+          Submit
+        </button>
+      </div>
+    </form>
   </div>
 
-  <div>
-    <%= form.label :youtube, style: "display: block" %>
-    <%= form.text_field :youtube %>
+  <!-- Modal for success message -->
+  <div id="success-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 class="text-xl font-semibold">Form Submitted!</h3>
+      <p class="mt-4">Thank you for updating your profile.</p>
+      <button id="close-modal-btn">OK</button>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :twitch, style: "display: block" %>
-    <%= form.text_field :twitch %>
-  </div>
+  <script>
+    document.getElementById('profile-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Get the modal and display it
+      const modal = document.getElementById('success-modal');
+      modal.style.display = 'flex';
+      
+      // Optional: Clear form fields
+      // event.target.reset();
+    });
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :other, style: "display: block" %>
-    <%= form.text_field :other %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+      // Hide the modal
+      const modal = document.getElementById('success-modal');
+      modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
