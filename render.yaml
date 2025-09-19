@@ -9,7 +9,7 @@ services:
     name: linktreeclone
     runtime: ruby
     plan: free
-    buildCommand: './bin/render-build.sh'
+    buildCommand: 'bundle install'
     startCommand: 'bundle exec rails server'
     envVars:
       - key: DATABASE_URL
